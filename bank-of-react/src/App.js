@@ -4,12 +4,16 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import LogIn from './components/LogIn';
+import Credits from './components/Credits';
+import Debits from './components/Debits';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       accountBalance: 1234567.89,
+      creditList: [],
+      debitList: [],
       currentUser: {
         userName: 'Joe Smith',
         memberSince: '11/22/99'
@@ -41,6 +45,8 @@ class App extends Component {
           <Route exact path="/" element={<HomeComponent />} />
           <Route exact path="/login" element={<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />} />
           <Route exact path="/userProfile" element={<UserProfileComponent />} />
+          <Route exact path="/credits" element={<Credits credits={this.state.creditList} />} />
+          <Route exact path="/debits" element={<Debits debits={this.state.debitList}/>} />
         </Routes>
       </Router>
     );
