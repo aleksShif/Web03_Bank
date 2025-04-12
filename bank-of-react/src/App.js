@@ -26,11 +26,36 @@ class App extends Component {
     const newUser = {...this.state.currentUser}; 
     newUser.userName = logInInfo.userName; 
     this.setState({currentUser: newUser});
-  }
+  };
+
+  addDebit = (e) => {
+    e.preventDefault();
+
+    const id = this.state.debitList.length + 1;
+    const description = e.target.description.value;
+    const amount = e.target.amount.value;
+    const d = new Date(); 
+    const date = "" +(d.getMonth()+1) +"-" +d.getDate() + "-" +d.getFullYear();
+    
+    const newDebit = {
+      id: id,
+      amount: amount,
+      description: description,
+      date: date
+    };
+
+    const newBalance = parseInt(this.state.accountBalance) + amount;
+    const debitEntry = this.state.debitList;
+    debitEntry.push(newDebit)
+    this.setState({debitList: debitEntry});
+    this.setState({accountBalance: newBalance});
+    
+  }; 
+
 
   render() {
     const HomeComponent = () => (
-      <Home accountBalance={this.state.accountBalance} />
+      <Home userName={this.state.currentUser.userName} accountBalance={this.state.accountBalance} />
     );
     const UserProfileComponent = () => (
       <UserProfile
@@ -46,7 +71,7 @@ class App extends Component {
           <Route exact path="/login" element={<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />} />
           <Route exact path="/userProfile" element={<UserProfileComponent />} />
           <Route exact path="/credits" element={<Credits credits={this.state.creditList} />} />
-          <Route exact path="/debits" element={<Debits debits={this.state.debitList}/>} />
+          <Route exact path="/debits" element={<Debits debits={this.state.debitList} addDebit={this.addDebit}/>} />
         </Routes>
       </Router>
     );

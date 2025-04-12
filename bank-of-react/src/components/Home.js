@@ -1,23 +1,38 @@
 import React, {Component} from 'react';
 import AccountBalance from './AccountBalance';
 import {Link} from 'react-router-dom';
+import MountainBackground from './Background';
+import './style.css'; 
 
 class Home extends Component {
     render() {
         return (
-            <div>
-                <img src="https://picsum.photos/200/200" alt="bank" />
-                <h1>Bank of React</h1>
+            <div className="home-container">
+                <MountainBackground /> 
 
-                <Link to="/userProfile">User Profile</Link>
-                <br/>
-                <Link to="/login">Login</Link>
-                <br/>
-                <Link to="/credits">Credits</Link>
-                <br/>
-                <Link to="/debits">Debits</Link>
-                <br/><br/>
-                <AccountBalance accountBalance={this.props.accountBalance} />
+                <header className="header">
+                    <h1>Bank of React</h1>
+                    <nav className="home-header-nav">
+                        <Link to="/userProfile" className="home-button">User Profile</Link>
+                        <Link to="/login" className="home-button">Login</Link>
+                    </nav>
+                </header>
+
+                <div className="foreground">
+                    <img src="/images/black-cat.avif" alt="bank" />
+                    <div className="info-container">
+                        <h1>Welcome, {this.props.userName}</h1>
+
+                        <Link to="/credits" className="home-button">Credits</Link>
+                        <br/>
+                        <Link to="/debits" className="home-button">Debits</Link>
+                        <br/>
+                    </div>
+                    <div className="info-container">
+                        <br/>
+                        <AccountBalance accountBalance={this.props.accountBalance} />
+                    </div>
+                </div>
             </div>
         );
     }
