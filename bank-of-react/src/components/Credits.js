@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom';
 import MountainBackground from './Background';
+import AccountBalance from './AccountBalance';
+import './style.css';
 const Credits = (props) => {
 
 
@@ -25,31 +27,36 @@ const Credits = (props) => {
         return ( 
             <div className="CreditsContainer">
                 <MountainBackground />
-                <h1>Credits</h1>
-                <br/>
-                <div className="displayList">
-                    <div className="column">
-                        <h2>Description</h2>
-                        {viewCreditsDesc()}
+                <div className="foreground profile">
+                    <h1>Credits</h1>
+                    <div className="info-container">
+                        <br/>
+                        <AccountBalance accountBalance={props.accountBalance} />
+                    </div>
+                    <div className="displayList">
+                        <div className="column">
+                            <h2>Description</h2>
+                            {viewCreditsDesc()}
+                        </div>
+
+                        <div className="column">
+                            <h2>Amount</h2>
+                            {viewCreditsAmount()}
+                        </div>
+
+                        <div className="column">
+                            <h2>Date</h2>
+                            {viewCreditsDate()}
+                        </div>
                     </div>
 
-                    <div className="column">
-                        <h2>Amount</h2>
-                        {viewCreditsAmount()}
-                    </div>
-
-                    <div className="column">
-                        <h2>Date</h2>
-                        {viewCreditsDate()}
-                    </div>
+                    <form onSubmit={props.addCredit}>
+                        <input type="text" name="description" placeholder='Description' required="true"/>
+                        <input type="number" name="amount" placeholder='Amount' required="true" step="0.01"/>
+                        <button type="submit" className="home-button">Add Credit</button>
+                    </form>
+                    <Link className="home-button" to="/">Return to Home</Link>            
                 </div>
-
-                <form onSubmit={props.addCredit}>
-                    <input type="text" name="description" placeholder='Description'/>
-                    <input type="number" name="amount" placeholder='Amount'/>
-                    <button type="submit">Add Credit</button>
-                </form>
-                <Link to="/">Return to Home</Link>            
             </div>
         );
 }

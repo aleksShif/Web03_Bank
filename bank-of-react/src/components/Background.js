@@ -1,4 +1,6 @@
 import React from 'react';
+import './style.css';
+// This component creates a mountain background with a gradient sky and stars
 
 const MountainBackground = React.memo(() => {
   // Mountain layers data
@@ -48,50 +50,53 @@ const MountainBackground = React.memo(() => {
   }
 
   return (
-    <div className="w-full h-full absolute inset-0 -z-10 overflow-hidden bg-gradient-to-b from-pink-900 to-red-900">
-      <svg
-        viewBox="0 0 1000 600"
-        className="w-full h-full"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        {/* Sky gradient background */}
-        <defs>
-          <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#4d1428" />
-            <stop offset="100%" stopColor="#672e51" />
-          </linearGradient>
-        </defs>
-        <rect x="0" y="0" width="1000" height="600" fill="url(#skyGradient)" />
-        
-        {/* Add some stars in the sky */}
-        {Array.from({ length: 100 }).map((_, i) => {
-          const x = Math.random() * 1000;
-          const y = Math.random() * 350;
-          const size = Math.random() * 2 + 0.5;
-          const opacity = Math.random() * 0.7 + 0.3;
-          return (
-            <circle 
-              key={`star-${i}`}
-              cx={x}
-              cy={y}
-              r={size}
-              fill="#fec493"
-              opacity={opacity}
+    <div className="mountain-background">
+        <div className="w-full h-full absolute inset-0 -z-10 overflow-hidden bg-gradient-to-b from-pink-900 to-red-900">
+        <svg
+            viewBox="0 0 1000 600"
+            className="w-full h-full"
+            preserveAspectRatio="xMidYMid slice"
+        >
+            {/* Sky gradient background */}
+            <defs>
+            <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#4d1428" />
+                <stop offset="100%" stopColor="#672e51" />
+            </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="1000" height="600" fill="url(#skyGradient)" />
+            
+            {/* Add some stars in the sky */}
+            {Array.from({ length: 100 }).map((_, i) => {
+            const x = Math.random() * 1000;
+            const y = Math.random() * 350;
+            const size = Math.random() * 2 + 0.5;
+            const opacity = Math.random() * 0.7 + 0.3;
+            return (
+                <circle 
+                key={`star-${i}`}
+                cx={x}
+                cy={y}
+                r={size}
+                fill="#fec493"
+                opacity={opacity}
+                />
+            );
+            })}
+            
+            {/* Mountain layers from back to front */}
+            {mountains.map((mountain, index) => (
+            <polygon
+                key={`mountain-${index}`}
+                points={mountain.points}
+                fill={mountain.color}
             />
-          );
-        })}
-        
-        {/* Mountain layers from back to front */}
-        {mountains.map((mountain, index) => (
-          <polygon
-            key={`mountain-${index}`}
-            points={mountain.points}
-            fill={mountain.color}
-          />
-        ))}
-      </svg>
+            ))}
+        </svg>
+        </div>
     </div>
   );
+  
 });
 
 export default MountainBackground;

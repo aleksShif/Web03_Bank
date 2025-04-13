@@ -1,30 +1,64 @@
 import {Link} from 'react-router-dom';
-
+import MountainBackground from './Background';
+import AccountBalance from './AccountBalance';
+import './style.css';
 const Debits = (props) => {
-  // Create the list of Debit items
-  let debitsView = () => {
-    const { debits } = props;
-    return debits.map((debit) => {  // Extract "id", "amount", "description" and "date" properties of each debits JSON array element
-      let date = debit.date.slice(0,10);
-      return <li key={debit.id}>{debit.amount} {debit.description} {date}</li>
-    });
-  }
-  // Render the list of Debit items and a form to input new Debit item
-  return (
-    <div>
-      <h1>Debits</h1>
 
-      {debitsView()}
 
-      <form onSubmit={props.addDebit}>
-        <input type="text" name="description" />
-        <input type="number" name="amount" />
-        <button type="submit">Add Debit</button>
-      </form>
-      <br/>
-      <Link to="/">Return to Home</Link>
-    </div>
-  );
+    let viewDebitsDesc = () =>{
+        const {debits} = props
+        return debits.map((debit) => {
+            return <li className="debitListItem" key={debit.id}>{debit.description}</li>
+        });
+    }
+    let viewDebitsAmount = () =>{
+        const {debits} = props
+        return debits.map((debit) => {
+            return <li className="debitListItem" key={debit.id}>{debit.amount}</li>
+        });
+    }
+    let viewDebitsDate = () =>{
+        const {debits} = props
+        return debits.map((debit) => {
+            let date = debit.date.slice(0,10);
+            return <li className="debitListItem" key={debit.id}>{date}</li>
+        });
+    }
+        return ( 
+            <div className="DebitsContainer">
+                <MountainBackground />
+                <div className="foreground profile">
+                    <h1>Debits</h1>
+                    <div className="info-container">
+                        <br/>
+                        <AccountBalance accountBalance={props.accountBalance} />
+                    </div>
+                    <div className="displayList">
+                        <div className="column">
+                            <h2>Description</h2>
+                            {viewDebitsDesc()}
+                        </div>
+
+                        <div className="column">
+                            <h2>Amount</h2>
+                            {viewDebitsAmount()}
+                        </div>
+
+                        <div className="column">
+                            <h2>Date</h2>
+                            {viewDebitsDate()}
+                        </div>
+                    </div>
+
+                    <form onSubmit={props.addDebit}>
+                        <input type="text" name="description" placeholder='Description' required="true"/>
+                        <input type="number" name="amount" placeholder='Amount' required="true" step="0.01"/>
+                        <button type="submit" className="home-button">Add Debit</button>
+                    </form>
+                    <Link className="home-button" to="/">Return to Home</Link>            
+                </div>
+            </div>
+        );
 }
 
-export default Debits;
+export default Debits; 

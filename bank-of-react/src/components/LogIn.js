@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import './style.css';
 import MountainBackground from './Background';
 
@@ -58,6 +58,7 @@ class LogIn extends Component {
             </div>
             <button className="home-button">Log In</button>
           </form>
+          <Link className="home-button" to="/">Return to Home</Link>  
         </div>
       </div>
     );
