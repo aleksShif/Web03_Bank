@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Navigate } from 'react-router-dom'
+import './style.css';
+import MountainBackground from './Background';
 
 class LogIn extends Component {
   constructor () {  // Create and initialize state
@@ -40,19 +42,23 @@ class LogIn extends Component {
     }
     // Render the login form
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>User Name
-              <input type="text" name="userName" onChange={this.handleChange} />
-            </label>
-          </div>
-          <div>
-            <label>Password</label>
-            <input type="password" name="password" />
-          </div>
-          <button>Log In</button>
-        </form>
+      <div className="home-container">
+        <MountainBackground />
+        <div className="foreground">
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label>User Name</label>
+                <input type="text" name="userName" onChange={this.handleChange} />
+              
+            </div>
+            <div>
+              <label>Password</label>
+                <input type="password" name="password" />
+              
+            </div>
+            <button className="home-button">Log In</button>
+          </form>
+        </div>
       </div>
     );
   }
