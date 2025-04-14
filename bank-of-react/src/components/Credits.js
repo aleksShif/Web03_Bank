@@ -27,12 +27,16 @@ const Credits = (props) => {
         return ( 
             <div className="CreditsContainer">
                 <MountainBackground />
-                <div className="foreground profile">
+
+                <header className="header credits">
                     <h1>Credits</h1>
-                    <div className="info-container">
-                        <br/>
-                        <AccountBalance accountBalance={props.accountBalance} />
+                    <div className="home-header-nav credits">
+                        <Link to="/" className="home-button" style={{marginLeft: 'auto'}}>Back Home</Link>
+                        <AccountBalance accountBalance={props.accountBalance} />  
                     </div>
+                </header>
+
+                <div className="foreground profile" style={{marginTop: '50px'}}>
                     <div className="displayList">
                         <div className="column">
                             <h2>Description</h2>
@@ -51,11 +55,10 @@ const Credits = (props) => {
                     </div>
 
                     <form onSubmit={props.addCredit}>
-                        <input type="text" name="description" placeholder='Description' required="true"/>
-                        <input type="number" name="amount" placeholder='Amount' required="true" step="0.01"/>
+                        <input type="text" name="description" placeholder='Description' required={true} maxLength="15"/>
+                        <input type="number" name="amount" placeholder='Amount' required={true} step="0.01"/>
                         <button type="submit" className="home-button">Add Credit</button>
                     </form>
-                    <Link className="home-button" to="/">Return to Home</Link>            
                 </div>
             </div>
         );

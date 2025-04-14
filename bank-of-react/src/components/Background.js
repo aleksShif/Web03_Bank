@@ -50,7 +50,7 @@ const MountainBackground = React.memo(() => {
   }
 
   return (
-    <div className="mountain-background">
+    <div className="mountain-background" style={{position: 'absolute', overflow: 'hidden', }}>
         <div className="w-full h-full absolute inset-0 -z-10 overflow-hidden bg-gradient-to-b from-pink-900 to-red-900">
         <svg
             viewBox="0 0 1000 600"
