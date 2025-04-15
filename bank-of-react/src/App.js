@@ -95,7 +95,7 @@ class App extends Component {
           console.log(error.response.status); // print out error code 
         }
       });
-    console.log("final balance is: ", newBalance);
+    console.log("the final balance is: ", newBalance);
     this.setState({
       accountBalance: newBalance,
       debitList: dbList,
