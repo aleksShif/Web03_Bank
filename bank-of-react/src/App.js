@@ -35,7 +35,7 @@ class App extends Component {
       .then((response) => {
         //response = axios.get(linkToAPIDebit); // 
         //console.log(response.data)
-        this.setState({debitData : response.data}); // set debit Data to list of JSON data, each representing a debit
+        //this.setState({debitData : response.data}); // set debit Data to list of JSON data, each representing a debit
         let list = response.data; // list of json data
         // 1 json elemen
         list.forEach(element => {
@@ -55,7 +55,7 @@ class App extends Component {
           console.log("new balance is: ", newBalance);
           dbList.push(newDebit);
         });
-        console.log("final balance is: ", this.state.accountBalance);
+        //console.log("final balance is: ", this.state.accountBalance);
       })
       .catch((error) => {
         if (error.response){
@@ -69,7 +69,7 @@ class App extends Component {
       .then((response) =>{
         //let response = axios.get(linkToAPICredit); // 
         console.log(response) // print out response
-        this.setState({creditData : response.data}); // set state of debit List with response data
+        //this.setState({creditData : response.data}); // set state of debit List with response data
         let list = response.data; // list of json data
         list.forEach(element => {
           console.log("added to list");
