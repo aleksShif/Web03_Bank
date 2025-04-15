@@ -165,7 +165,7 @@ class App extends Component {
     );
 
     return (
-      <Router basename="/Web03_Bank/bank-of-react/">
+      <Router basename="/Web03_Bank">
         <Routes>
           <Route exact path="/" element={<HomeComponent />} />
           <Route exact path="/login" element={<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />} />
