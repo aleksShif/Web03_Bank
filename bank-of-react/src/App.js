@@ -31,6 +31,63 @@ class App extends Component {
     let newBalance = 0;
     let dbList = [];
     let cdList = [];
+
+    Promise.all([
+      axios.get(linkToAPIDebit),
+      axios.get(linkToAPICredit)
+    ])
+      .then(([debitResponse, creditResponse]) => {
+          let list = debitResponse.data; // list of json data
+          // 1 json elemen
+          list.forEach(element => {
+            console.log("added to list");
+            const id = element.id; // id of debit
+            const description = element.description; // description of debit
+            const amount = element.amount; // amount of debit
+            const date = element.date  // date of debit
+            const newDebit = {
+              id: id,
+              description: description,
+              amount: amount,
+              date: date
+            };
+            console.log("amount is: ", parseFloat(amount)); 
+            newBalance = Math.round((newBalance - parseFloat(amount))*100)/100;
+            console.log("new balance is: ", newBalance);
+            dbList.push(newDebit);
+          });
+          list = creditResponse.data; 
+          list.forEach(element => {
+            console.log("added to list");
+            const id = element.id; // id of debit
+            const description = element.description; // description of debit
+            const amount = element.amount; // amount of debit
+            const date = element.date  // date of debit
+            const newCredit = {
+              id: id,
+              description: description,
+              amount: amount,
+              date: date
+            };
+            console.log("amount is: ", parseFloat(amount)); 
+            newBalance = Math.round((newBalance + parseFloat(amount))*100)/100;
+            console.log("new balance is: ", newBalance);
+            cdList.push(newCredit);
+          });
+
+          this.setState({
+            accountBalance: newBalance,
+            debitList: dbList,
+            creditList: cdList,
+          });
+          console.log("account balance: ", newBalance);
+      
+      })
+      .catch((error) => {
+        console.log("error");
+      });
+
+  /* 
     axios.get(linkToAPIDebit)
       .then((response) => {
         //response = axios.get(linkToAPIDebit); // 
@@ -100,7 +157,9 @@ class App extends Component {
       accountBalance: newBalance,
       debitList: dbList,
       creditList: cdList
-    });
+    }, () => {
+      console.log("account balance: ", this.state.accountBalance);});
+  */
   };
 
   mockLogIn = (logInInfo) => {
@@ -170,7 +229,8 @@ class App extends Component {
     );
 
     return (
-      <Router basename="/Web03_Bank">
+      // <Router basename="/Web03_Bank"> 
+      <Router>
         <Routes>
           <Route exact path="/" element={<HomeComponent />} />
           <Route exact path="/login" element={<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />} />

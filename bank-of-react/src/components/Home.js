@@ -19,7 +19,7 @@ class Home extends Component {
                 </header>
 
                 <div className="foreground">
-                    {/*<img src="/bank-of-react/public/images/black-cat.avif" alt="bank" /> */}
+                    <img src={`${process.env.PUBLIC_URL}/images/black-cat.avif`} alt="bank" />
                     <div className="info-container">
                         <h1>Welcome, {this.props.userName}</h1>
 
