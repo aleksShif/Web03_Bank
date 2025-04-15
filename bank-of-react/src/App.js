@@ -86,7 +86,6 @@ class App extends Component {
           console.log("amount is: ", parseFloat(amount)); 
           newBalance = Math.round((newBalance + parseFloat(amount))*100)/100;
           console.log("new balance is: ", newBalance);
-          console.log("hi new");
           cdList.push(newCredit);
         });
       })
@@ -160,12 +159,9 @@ class App extends Component {
 
 
   render() {
-    const HomeComponent = () => {
-    const newBalance = this.state.accountBalance;
-    return (
-      <Home userName={this.state.currentUser.userName} accountBalance={newBalance} />
+    const HomeComponent = () => (
+      <Home userName={this.state.currentUser.userName} accountBalance={this.state.accountBalance} />
     );
-  }
     const UserProfileComponent = () => (
       <UserProfile
         userName={this.state.currentUser.userName}
