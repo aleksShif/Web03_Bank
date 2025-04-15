@@ -35,7 +35,7 @@ class App extends Component {
       let response = await axios.get(linkToAPIDebit); // 
       //console.log(response.data)
       this.setState({debitData : response.data}); // set debit Data to list of JSON data, each representing a debit
-      let list = this.state.debitData; // list of json data
+      let list = response.data; // list of json data
       // 1 json elemen
       list.forEach(element => {
         console.log("added to list");
@@ -68,7 +68,7 @@ class App extends Component {
       let response = await axios.get(linkToAPICredit); // 
       console.log(response) // print out response
       this.setState({creditData : response.data}); // set state of debit List with response data
-      let list = this.state.creditData; // list of json data
+      let list = response.data; // list of json data
       list.forEach(element => {
         const id = element.id; // id of debit
         const description = element.description; // description of debit
