@@ -24,7 +24,7 @@ class App extends Component {
     };
   };
 
-  async componentDidMount(){
+  componentDidMount(){
     let linkToAPIDebit = 'https://johnnylaicode.github.io/api/debits.json'; // link to debit API
     let linkToAPICredit = 'https://johnnylaicode.github.io/api/credits.json'; // do try and catch, but with link being to credits API
     
@@ -32,7 +32,7 @@ class App extends Component {
     let dbList = [];
     let cdList = [];
     try {
-      let response = await axios.get(linkToAPIDebit); // 
+      let response = axios.get(linkToAPIDebit); // 
       //console.log(response.data)
       this.setState({debitData : response.data}); // set debit Data to list of JSON data, each representing a debit
       let list = response.data; // list of json data
@@ -65,7 +65,7 @@ class App extends Component {
 
 
     try {
-      let response = await axios.get(linkToAPICredit); // 
+      let response = axios.get(linkToAPICredit); // 
       console.log(response) // print out response
       this.setState({creditData : response.data}); // set state of debit List with response data
       let list = response.data; // list of json data
