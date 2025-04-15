@@ -93,10 +93,12 @@ class App extends Component {
         }
       });
     console.log("new balance is: ", newBalance);
-    this.setState({accountBalance: newBalance,
+    this.setState({
+      accountBalance: newBalance,
       debitList: dbList,
-      creditList: cdList});
-  }
+      creditList: cdList
+    });
+  };
 
   mockLogIn = (logInInfo) => {
     console.log("mockLogIn called with: ", logInInfo);
