@@ -12,7 +12,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      accountBalance: 779.25,
+      accountBalance: 0,
       creditList: [],
       debitList: [],
       currentUser: {
@@ -24,143 +24,37 @@ class App extends Component {
     };
   };
 
-  componentDidMount(){
-    let linkToAPIDebit = 'https://johnnylaicode.github.io/api/debits.json'; // link to debit API
-    let linkToAPICredit = 'https://johnnylaicode.github.io/api/credits.json'; // do try and catch, but with link being to credits API
-    
-    let newBalance = 0;
-    let dbList = [];
-    let cdList = [];
+  componentDidMount() {
+    const linkToAPIDebit = 'https://johnnylaicode.github.io/api/debits.json'; // Link to debit API
+    const linkToAPICredit = 'https://johnnylaicode.github.io/api/credits.json'; // Link to credit API
 
     Promise.all([
-      axios.get(linkToAPIDebit),
-      axios.get(linkToAPICredit)
+        axios.get(linkToAPIDebit),
+        axios.get(linkToAPICredit)
     ])
-      .then(([debitResponse, creditResponse]) => {
-          let list = debitResponse.data; // list of json data
-          // 1 json elemen
-          list.forEach(element => {
-            console.log("added to list");
-            const id = element.id; // id of debit
-            const description = element.description; // description of debit
-            const amount = element.amount; // amount of debit
-            const date = element.date  // date of debit
-            const newDebit = {
-              id: id,
-              description: description,
-              amount: amount,
-              date: date
-            };
-            console.log("amount is: ", parseFloat(amount)); 
-            newBalance = Math.round((newBalance - parseFloat(amount))*100)/100;
-            console.log("new balance is: ", newBalance);
-            dbList.push(newDebit);
-          });
-          list = creditResponse.data; 
-          list.forEach(element => {
-            console.log("added to list");
-            const id = element.id; // id of debit
-            const description = element.description; // description of debit
-            const amount = element.amount; // amount of debit
-            const date = element.date  // date of debit
-            const newCredit = {
-              id: id,
-              description: description,
-              amount: amount,
-              date: date
-            };
-            console.log("amount is: ", parseFloat(amount)); 
-            newBalance = Math.round((newBalance + parseFloat(amount))*100)/100;
-            console.log("new balance is: ", newBalance);
-            cdList.push(newCredit);
-          });
+    .then(([debitResponse, creditResponse]) => {
+        console.log("Debit Data:", debitResponse.data);
+        console.log("Credit Data:", creditResponse.data);
+        const debitData = debitResponse.data;
+        const creditData = creditResponse.data;
 
-          this.setState({
-            accountBalance: newBalance,
-            debitList: dbList,
-            creditList: cdList,
-          });
-          console.log("account balance: ", newBalance);
-      
-      })
-      .catch((error) => {
-        console.log("error");
-      });
+        const totalDebits = debitData.reduce((sum, debit) => sum + parseFloat(debit.amount), 0);
+        const totalCredits = creditData.reduce((sum, credit) => sum + parseFloat(credit.amount), 0);
 
-  /* 
-    axios.get(linkToAPIDebit)
-      .then((response) => {
-        //response = axios.get(linkToAPIDebit); // 
-        //console.log(response.data)
-        //this.setState({debitData : response.data}); // set debit Data to list of JSON data, each representing a debit
-        let list = response.data; // list of json data
-        // 1 json elemen
-        list.forEach(element => {
-          console.log("added to list");
-          const id = element.id; // id of debit
-          const description = element.description; // description of debit
-          const amount = element.amount; // amount of debit
-          const date = element.date  // date of debit
-          const newDebit = {
-            id: id,
-            description: description,
-            amount: amount,
-            date: date
-          };
-          console.log("amount is: ", parseFloat(amount)); 
-          newBalance = Math.round((newBalance - parseFloat(amount))*100)/100;
-          console.log("new balance is: ", newBalance);
-          dbList.push(newDebit);
+        const newBalance = Math.round((totalCredits - totalDebits) * 100) / 100;
+
+        this.setState({
+            debitList: debitData,
+            creditList: creditData,
+            accountBalance: newBalance
+        }, () => {
+          console.log("Updated State: ", this.state);
         });
-        //console.log("final balance is: ", this.state.accountBalance);
-      })
-      .catch((error) => {
-        if (error.response){
-          console.log(error.response.data); // print error message
-          console.log(error.response.status); // print out error code 
-        }
-      });
-
-
-    axios.get(linkToAPICredit)
-      .then((response) =>{
-        //let response = axios.get(linkToAPICredit); // 
-        console.log(response) // print out response
-        //this.setState({creditData : response.data}); // set state of debit List with response data
-        let list = response.data; // list of json data
-        list.forEach(element => {
-          console.log("added to list");
-          const id = element.id; // id of debit
-          const description = element.description; // description of debit
-          const amount = element.amount; // amount of debit
-          const date = element.date  // date of debit
-          const newCredit = {
-            id: id,
-            description: description,
-            amount: amount,
-            date: date
-          };
-          console.log("amount is: ", parseFloat(amount)); 
-          newBalance = Math.round((newBalance + parseFloat(amount))*100)/100;
-          console.log("new balance is: ", newBalance);
-          cdList.push(newCredit);
-        });
-      })
-      .catch((error) =>{
-        if (error.response){
-          console.log(error.response.data); // print error message
-          console.log(error.response.status); // print out error code 
-        }
-      });
-    console.log("the final balance is: ", newBalance);
-    this.setState({
-      accountBalance: newBalance,
-      debitList: dbList,
-      creditList: cdList
-    }, () => {
-      console.log("account balance: ", this.state.accountBalance);});
-  */
-  };
+    })
+    .catch((error) => {
+        console.error("Error fetching data:", error);
+    });
+}
 
   mockLogIn = (logInInfo) => {
     console.log("mockLogIn called with: ", logInInfo);
